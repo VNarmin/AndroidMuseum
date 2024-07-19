@@ -1,9 +1,12 @@
 package com.example.joy.api
 
+import com.example.joy.local.SozDAO
+import com.example.joy.models.CityResponse
+import com.example.joy.models.Soz
 import retrofit2.Response
 import javax.inject.Inject
 
-class JoyRepository @Inject constructor(private val service: Service) {
+class JoyRepository @Inject constructor(private val service: Service, private val sozDAO: SozDAO) {
 
     suspend fun getCities() = safeApiRequest {
         service.getCities()
@@ -12,6 +15,16 @@ class JoyRepository @Inject constructor(private val service: Service) {
     suspend fun getRegions(cityName: String) = safeApiRequest {
         service.getRegions(city = cityName)
     }
+
+    suspend fun getapi(): Response<CityResponse> {
+        return service.getCities()
+    }
+
+    suspend fun getapi2() = service.getCities()
+
+    fun addSoz(soz: Soz) = sozDAO.insertSoz(soz)
+
+    suspend fun getSoz() = sozDAO.getAllSoz()
 
 
     private suspend fun <T> safeApiRequest(apiCall: suspend () -> Response<T>): NetworkResponse<T> {

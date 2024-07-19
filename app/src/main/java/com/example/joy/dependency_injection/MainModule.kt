@@ -1,9 +1,13 @@
 package com.example.joy.dependency_injection
 
 import android.content.Context
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.example.joy.api.ApiKeyInterceptor
 import com.example.joy.api.Service
+import com.example.joy.local.SozDAO
+import com.example.joy.local.SozDataBase
 import com.example.joy.utilities.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -66,5 +70,17 @@ object MainModule {
     @Singleton
     fun provideService(retrofit: Retrofit): Service {
         return retrofit.create(Service::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun createRoom(@ApplicationContext context: Context): SozDataBase {
+        return Room.databaseBuilder(context, SozDataBase::class.java, "local_db").build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDao(sozDataBase: SozDataBase):SozDAO{
+        return sozDataBase.getDao()
     }
 }

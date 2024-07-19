@@ -13,16 +13,21 @@ import com.example.joy.view_models.CityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CityFragment : BaseFragment < FragmentCityBinding > (FragmentCityBinding::inflate) {
-    private val cityViewModel by viewModels < CityViewModel > ()
+class CityFragment : BaseFragment<FragmentCityBinding>(FragmentCityBinding::inflate) {
+    private val cityViewModel by viewModels<CityViewModel>()
     private val cityAdapter = CityAdapter()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
         binding.recyclerViewCities.adapter = cityAdapter
         cityAdapter.onClick = { city ->
-            findNavController().navigate(CityFragmentDirections.actionCityFragmentToRegionFragment(city))
+            findNavController().navigate(
+                CityFragmentDirections.actionCityFragmentToRegionFragment(
+                    city
+                )
+            )
         }
     }
 
