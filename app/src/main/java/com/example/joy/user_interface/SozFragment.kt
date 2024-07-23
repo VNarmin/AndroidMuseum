@@ -26,6 +26,13 @@ class SozFragment : BaseFragment<FragmentSozBinding>(FragmentSozBinding::inflate
             addWord()
         }
 
+        viewModel.getFlow()
+        viewModel.getFlow2()
+
+
+        sozAdapter.onChange = {
+            viewModel.addWord(it)
+        }
     }
 
     private fun observeData() {

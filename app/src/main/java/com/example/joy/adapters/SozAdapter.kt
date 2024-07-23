@@ -9,6 +9,7 @@ import com.example.joy.models.Soz
 class SozAdapter : RecyclerView.Adapter<SozAdapter.SozViewHolder>() {
 
     private val wordList = arrayListOf<Soz>()
+    lateinit var onChange: (Soz) -> Unit
 
     inner class SozViewHolder(val binding: ItemWordBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -26,6 +27,10 @@ class SozAdapter : RecyclerView.Adapter<SozAdapter.SozViewHolder>() {
         val word = wordList[position]
 
         holder.binding.soz = word
+
+        holder.binding.switch1.setOnCheckedChangeListener { compoundButton, b ->
+            onChange(word)
+        }
     }
 
     fun updateList(word: List<Soz>) {

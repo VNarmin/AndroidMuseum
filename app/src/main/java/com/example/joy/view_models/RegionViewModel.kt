@@ -41,7 +41,7 @@ class RegionViewModel @Inject constructor(private val joyRepository: JoyReposito
 
         viewModelScope.launch {
             when (val reponse = joyRepository.getRegions(city)) {
-                is NetworkResponse.Success -> {
+             /*   is NetworkResponse.Success -> {
                     reponse.data?.regions?.let {
                         regions.value = it
                         loading.value = false
@@ -51,7 +51,7 @@ class RegionViewModel @Inject constructor(private val joyRepository: JoyReposito
                 is NetworkResponse.Error -> {
                     success.value = false
                     loading.value = false
-                }
+                }*/
             }
         }
     }

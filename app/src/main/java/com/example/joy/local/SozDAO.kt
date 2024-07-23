@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.joy.models.Soz
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SozDAO {
@@ -13,6 +15,9 @@ interface SozDAO {
     fun insertSoz(soz: Soz)
 
     @Query("select * from soz_table")
-    suspend fun getAllSoz(): List<Soz>
+    fun getAllSoz(): Flow<List<Soz>>
+
+    @Update
+    fun updateSoz(soz: Soz)
 
 }

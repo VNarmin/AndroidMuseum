@@ -31,7 +31,7 @@ class CityAdapter : RecyclerView.Adapter < CityAdapter.CityViewHolder > () {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateCities(new : ArrayList < City? > ) {
+    fun updateCities(new : List < City? > ) {
         cities.clear()
         cities.addAll(new)
         notifyDataSetChanged()

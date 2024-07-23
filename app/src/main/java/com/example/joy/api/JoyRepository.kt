@@ -3,6 +3,10 @@ package com.example.joy.api
 import com.example.joy.local.SozDAO
 import com.example.joy.models.CityResponse
 import com.example.joy.models.Soz
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -26,20 +30,26 @@ class JoyRepository @Inject constructor(private val service: Service, private va
 
     suspend fun getSoz() = sozDAO.getAllSoz()
 
+     fun updateSoz(soz: Soz) = sozDAO.updateSoz(soz)
 
-    private suspend fun <T> safeApiRequest(apiCall: suspend () -> Response<T>): NetworkResponse<T> {
-        try {
-            val response = apiCall.invoke()
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    return NetworkResponse.Success(it)
-                } ?: return NetworkResponse.Error("Empty Response")
-            } else {
-                return NetworkResponse.Error(response.errorBody().toString())
+
+    private suspend fun <T : Any> safeApiRequest(apiCall: suspend () -> Response<T>): Flow<NetworkResponse<T>> =
+        flow {
+            emit(NetworkResponse.Loading())
+            try {
+                val response = apiCall.invoke()
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        emit(NetworkResponse.Success(it))
+                    } ?: emit(NetworkResponse.Error("Empty Response"))
+                } else {
+                    emit(NetworkResponse.Error(response.errorBody().toString()))
+                }
+
+            } catch (e: Exception) {
+                emit(NetworkResponse.Error(e.localizedMessage.toString()))
             }
+        }.flowOn(Dispatchers.IO)
 
-        } catch (e: Exception) {
-            return NetworkResponse.Error(e.localizedMessage.toString())
-        }
-    }
+
 }

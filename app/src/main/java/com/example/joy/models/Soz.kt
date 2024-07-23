@@ -7,8 +7,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "soz_table")
 data class Soz(
     @PrimaryKey(autoGenerate = true)
-    val id: Int=0,
+    val id: Int = 0,
     @ColumnInfo("soz_turkce")
     val turkce: String,
-    val ingilisce: String
+    val ingilisce: String,
+    val isFavorite: Boolean = false
 )
