@@ -1,12 +1,12 @@
 package com.example.joy.api
 
-sealed class NetworkResponse<T:Any>(val data: T?, val message: String?) {
+sealed class NetworkResponse<T:Any> {
 
-    class Success<T:Any>(data: T) : NetworkResponse<T>(data, null)
+    class Success<T:Any>(val data: T) : NetworkResponse<T>()
 
-    class Error<T:Any>(message: String) : NetworkResponse<T>(null, message)
+    class Error<T:Any>(val message: String) : NetworkResponse<T>()
 
-    class Loading<Nothing : Any> : NetworkResponse<Nothing>(null, null)
+    class Loading<Nothing : Any> : NetworkResponse<Nothing>()
 
 
 }

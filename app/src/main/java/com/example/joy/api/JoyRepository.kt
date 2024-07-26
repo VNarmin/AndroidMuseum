@@ -28,9 +28,9 @@ class JoyRepository @Inject constructor(private val service: Service, private va
 
     fun addSoz(soz: Soz) = sozDAO.insertSoz(soz)
 
-    suspend fun getSoz() = sozDAO.getAllSoz()
+    fun getSoz() = sozDAO.getAllSoz()
 
-     fun updateSoz(soz: Soz) = sozDAO.updateSoz(soz)
+    fun updateSoz(soz: Soz) = sozDAO.updateSoz(soz)
 
 
     private suspend fun <T : Any> safeApiRequest(apiCall: suspend () -> Response<T>): Flow<NetworkResponse<T>> =

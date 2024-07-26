@@ -2,6 +2,7 @@ package com.example.joy.user_interface
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.example.joy.adapters.SozAdapter
 import com.example.joy.base.BaseFragment
@@ -33,6 +34,8 @@ class SozFragment : BaseFragment<FragmentSozBinding>(FragmentSozBinding::inflate
         sozAdapter.onChange = {
             viewModel.addWord(it)
         }
+
+        searchWord()
     }
 
     private fun observeData() {
@@ -47,6 +50,12 @@ class SozFragment : BaseFragment<FragmentSozBinding>(FragmentSozBinding::inflate
         val turk = binding.editTextTurk.text.toString().trim()
 
         viewModel.addWord(Soz(ingilisce = ing, turkce = turk))
+    }
+
+    private fun searchWord() {
+        binding.editTextNg.addTextChangedListener {
+            viewModel.searchWord(it.toString())
+        }
     }
 
 }

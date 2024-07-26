@@ -17,10 +17,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SozViewModel @Inject constructor(
-    private val joyRepository: JoyRepository
+    private val joyRepository: JoyRepository,
 ) : ViewModel() {
 
     val wordList = MutableLiveData<List<Soz>>()
+    private var totalWorldList = listOf<Soz>()
 
 
     fun addWord(word: Soz) {
@@ -40,6 +41,7 @@ class SozViewModel @Inject constructor(
     fun getWords() {
         viewModelScope.launch {
             joyRepository.getSoz().collectLatest {
+                totalWorldList = it
                 wordList.value = it
             }
         }
@@ -56,6 +58,16 @@ class SozViewModel @Inject constructor(
             flow1.collectLatest {
                 Log.e("Flow1", it.toString())
             }
+        }
+
+    }
+
+    fun searchWord(query: String) {
+
+        viewModelScope.launch {
+            delay(300)
+            val newList = totalWorldList.filter { it.ingilisce.contains(query) }
+            wordList.value = newList ?: emptyList()
         }
 
     }

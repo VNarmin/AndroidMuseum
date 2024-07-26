@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.joy.models.Soz
 
-@Database(entities = [Soz::class], version = 1)
+@Database(entities = [Soz::class], version = 2)
 abstract class SozDataBase : RoomDatabase() {
 
     abstract fun getDao(): SozDAO
